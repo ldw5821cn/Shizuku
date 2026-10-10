@@ -49,9 +49,9 @@ abstract class HomeActivity : AppBarActivity() {
         setContentView(binding.root)
 
         homeModel.serviceStatus.observe(this) {
+            adapter.updateData()
             if (it.status == Status.SUCCESS) {
                 val status = homeModel.serviceStatus.value?.data ?: return@observe
-                adapter.updateData()
                 ShizukuSettings.setLastLaunchMode(if (status.uid == 0) ShizukuSettings.LaunchMethod.ROOT else ShizukuSettings.LaunchMethod.ADB)
             }
         }
